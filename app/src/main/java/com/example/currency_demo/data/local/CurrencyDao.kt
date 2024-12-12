@@ -15,7 +15,7 @@ import io.reactivex.Observable
  */
 
 @Dao
-interface CurrencyInfoDao {
+interface CurrencyDao {
 
     @Query("DELETE FROM currency_info")
     fun clearAllCurrencies(): Completable
