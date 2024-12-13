@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currency_demo.databinding.FragmentCurrencyListBinding
+import com.example.currency_demo.presentation.adapter.CurrencyAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -20,6 +23,8 @@ class CurrencyListFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private val currencyAdapter = CurrencyAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,10 +36,15 @@ class CurrencyListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAdapter()
+        setupRecyclerView()
     }
 
-    private fun setupAdapter() {}
+    private fun setupRecyclerView() {
+        binding.rvCurrencies.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = currencyAdapter
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
