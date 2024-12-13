@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CurrencyListFragment : Fragment() {
 
     private var _binding: FragmentCurrencyListBinding? = null
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
