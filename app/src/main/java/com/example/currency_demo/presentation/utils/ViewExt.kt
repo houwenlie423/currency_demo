@@ -3,6 +3,8 @@ package com.example.currency_demo.presentation.utils
 import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SearchView
@@ -45,4 +47,9 @@ inline fun AppCompatEditText.onTextChanged(crossinline listener: (String) -> Uni
 
 fun Activity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
+}
+
+fun View.hideKeyboard(){
+    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
