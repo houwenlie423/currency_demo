@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@id/etCurrencySymbol" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fcCurrencyList"
+        android:id="@+id/fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
