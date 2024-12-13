@@ -4,15 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".presentation.view.DemoActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddFiat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:background="@color/dark_purple"
+        android:padding="6dp"
+        android:text="@string/btn_add_fiat"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddCrpyto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:background="@color/dark_purple"
+        android:padding="6dp"
+        android:text="@string/btn_add_crypto"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/btnAddFiat"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/dark_purple"
+        android:padding="6dp"
+        android:text="@string/btn_clear_data"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/etCurrencyCode"
+        app:layout_constraintStart_toStartOf="@id/btnAddFiat" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/dark_purple"
+        android:padding="6dp"
+        android:text="@string/btn_add_new"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/etCurrencyCode"
+        app:layout_constraintStart_toStartOf="@id/btnAddCrpyto" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCurrencyId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:hint="@string/hint_currency_id"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnAddCrpyto"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCurrencyName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_currency_name"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/etCurrencyId"
+        app:layout_constraintStart_toStartOf="@id/etCurrencyId"
+        app:layout_constraintTop_toBottomOf="@id/etCurrencyId" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCurrencySymbol"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_currency_symbol"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/etCurrencyId"
+        app:layout_constraintStart_toStartOf="@id/etCurrencyId"
+        app:layout_constraintTop_toBottomOf="@id/etCurrencyName" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCurrencyCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_currency_code"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/etCurrencyId"
+        app:layout_constraintStart_toStartOf="@id/etCurrencyId"
+        app:layout_constraintTop_toBottomOf="@id/etCurrencySymbol" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcCurrencyList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/etCurrencyCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

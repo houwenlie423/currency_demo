@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">currency_demo</string>
+
+    <!--  Demo Button  -->
+    <string name="btn_clear_data">Clear Data</string>
+    <string name="btn_add_crypto">Add Cryptos</string>
+    <string name="btn_add_fiat">Add Fiats</string>
+    <string name="btn_add_new">Add New</string>
+
+    <!--  EditText Hints  -->
+    <string name="hint_currency_id">ID</string>
+    <string name="hint_currency_name">Name</string>
+    <string name="hint_currency_symbol">Symbol</string>
+    <string name="hint_currency_code">Code (Optional)</string>
+
+    <!--  Empty State  -->
     <string name="currency_not_found_title">No Results</string>
     <string name="currency_not_found_description">Try adding more currencies or search for other key words</string>
 </resources>
