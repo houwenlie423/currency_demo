@@ -10,7 +10,9 @@ import io.reactivex.schedulers.Schedulers
  * @author Houwen Lie (houwenlie98@gmail.com)
  * @version SchedulersProviderImpl, v 0.1 Thu 12/12/2024 8:30 PM by Houwen Lie
  */
-class SchedulerProviderImpl(private val uiAsync: Boolean = true) : SchedulerProvider {
+class SchedulerProviderImpl(private val asyncMessaging: Boolean = true) : SchedulerProvider {
+
+    private val mainThreadScheduler by lazy { AndroidSchedulers.from(Looper.getMainLooper(), asyncMessaging) }
 
     override fun computation(): Scheduler {
         return Schedulers.computation()
@@ -21,6 +23,6 @@ class SchedulerProviderImpl(private val uiAsync: Boolean = true) : SchedulerProv
     }
 
     override fun ui(): Scheduler {
-        return AndroidSchedulers.from(Looper.getMainLooper(), uiAsync)
+        return mainThreadScheduler
     }
 }
