@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,10 @@ class CurrencyListFragment : Fragment() {
 
     private fun render(state: CurrencyListState) {
         when (state) {
-            is CurrencyListState.CurrenciesUpdated -> currencyAdapter.submitList(state.currencies)
+            is CurrencyListState.CurrenciesUpdated -> {
+                binding.rvCurrencies.isVisible = true
+                currencyAdapter.submitList(state.currencies)
+            }
 
             is CurrencyListState.Error -> activity?.showToast("SOMETHING BAD")
 
