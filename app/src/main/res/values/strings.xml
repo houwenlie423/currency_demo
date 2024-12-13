@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">currency_demo</string>
+    <string name="app_name">Currency Demo</string>
 
     <!--  Demo Button  -->
     <string name="btn_clear_data">Clear Data</string>
