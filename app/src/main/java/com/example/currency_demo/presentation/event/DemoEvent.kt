@@ -9,11 +9,11 @@ import com.example.currency_demo.data.model.CurrencyInfo
  */
 sealed class DemoEvent {
 
-    data object ClearData : DemoEvent()
+    data object ClearButtonClicked : DemoEvent()
 
-    data class AddFiatCurrencies(val currencies: List<CurrencyInfo>) : DemoEvent()
+    data class AddFiatButtonClicked(val currencies: List<CurrencyInfo>) : DemoEvent()
 
-    data class AddCryptoCurrencies(val currencies: List<CurrencyInfo>) : DemoEvent()
+    data class AddCryptoButtonClicked(val currencies: List<CurrencyInfo>) : DemoEvent()
 
-    data class AddCustomCurrency(val currency: CurrencyInfo) : DemoEvent()
+    data class AddCustomCurrencyButtonClicked(val currency: CurrencyInfo) : DemoEvent()
 }
