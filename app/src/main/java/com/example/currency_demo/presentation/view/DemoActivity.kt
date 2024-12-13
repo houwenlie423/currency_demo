@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.commit
 import com.example.currency_demo.R
 import com.example.currency_demo.databinding.ActivityDemoBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDemoBinding
