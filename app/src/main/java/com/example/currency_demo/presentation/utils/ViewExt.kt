@@ -50,6 +50,6 @@ fun Activity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 }
 
 fun View.hideKeyboard(){
-    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager ?: return
     inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
