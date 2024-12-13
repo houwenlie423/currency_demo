@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">currency_demo</string>
+    <string name="currency_not_found_title">No Results</string>
+    <string name="currency_not_found_description">Try adding more currencies or search for other key words</string>
 </resources>
