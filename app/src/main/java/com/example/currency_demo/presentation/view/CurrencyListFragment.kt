@@ -67,6 +67,7 @@ class CurrencyListFragment : Fragment() {
         binding.rvCurrencies.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = currencyAdapter
+            isVisible = true
         }
     }
 
@@ -86,9 +87,6 @@ class CurrencyListFragment : Fragment() {
 
     private fun showCurrencies(currencies: List<CurrencyInfo>) {
         binding.apply {
-            if (!rvCurrencies.isVisible) {
-                rvCurrencies.isVisible = true
-            }
             currencyAdapter.submitList(currencies)
             vEmptyState.root.isVisible = false
         }
@@ -96,7 +94,7 @@ class CurrencyListFragment : Fragment() {
 
     private fun showEmptyState() {
         binding.apply {
-            rvCurrencies.isVisible = false
+            currencyAdapter.submitList(emptyList())
             vEmptyState.root.isVisible = true
         }
     }
@@ -106,7 +104,7 @@ class CurrencyListFragment : Fragment() {
         activity?.showToast(message)
     }
 
-    private fun createMenuProvider() = object: MenuProvider {
+    private fun createMenuProvider() = object : MenuProvider {
 
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             menuInflater.inflate(R.menu.menu_fragment_currency_list, menu)
