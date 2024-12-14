@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.currency_demo.common.RxLifecycleVM
 import com.example.currency_demo.common.collectBy
 import com.example.currency_demo.common.scheduler.SchedulerProvider
+import com.example.currency_demo.domain.mapper.toCurrencyUiModels
 import com.example.currency_demo.domain.usecase.GetCurrencies
 import com.example.currency_demo.presentation.event.CurrencyListEvent
 import com.example.currency_demo.presentation.state.CurrencyListState
@@ -53,7 +54,7 @@ class CurrencyListViewModel @Inject constructor(
                         if (currencies.isEmpty()) {
                             CurrencyListState.CurrenciesNotFound
                         } else {
-                            CurrencyListState.CurrenciesUpdated(currencies)
+                            CurrencyListState.CurrenciesUpdated(currencies.toCurrencyUiModels())
                         }
                     }
                     .onErrorReturn { error -> CurrencyListState.Error(error.message.orEmpty()) }

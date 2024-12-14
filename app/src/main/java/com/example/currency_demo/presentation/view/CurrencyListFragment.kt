@@ -16,10 +16,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currency_demo.R
-import com.example.currency_demo.data.model.CurrencyInfo
 import com.example.currency_demo.databinding.FragmentCurrencyListBinding
 import com.example.currency_demo.presentation.adapter.CurrencyAdapter
 import com.example.currency_demo.presentation.event.CurrencyListEvent
+import com.example.currency_demo.presentation.model.CurrencyUiModel
 import com.example.currency_demo.presentation.state.CurrencyListState
 import com.example.currency_demo.presentation.utils.onQueryTextChanged
 import com.example.currency_demo.presentation.utils.showToast
@@ -86,7 +86,7 @@ class CurrencyListFragment : Fragment() {
         }
     }
 
-    private fun showCurrencies(currencies: List<CurrencyInfo>) {
+    private fun showCurrencies(currencies: List<CurrencyUiModel>) {
         binding.apply {
             currencyAdapter.submitList(currencies)
             vEmptyState.root.isVisible = false

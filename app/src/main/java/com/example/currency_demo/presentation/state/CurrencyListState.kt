@@ -1,6 +1,6 @@
 package com.example.currency_demo.presentation.state
 
-import com.example.currency_demo.data.model.CurrencyInfo
+import com.example.currency_demo.presentation.model.CurrencyUiModel
 
 
 /**
@@ -9,7 +9,7 @@ import com.example.currency_demo.data.model.CurrencyInfo
  */
 sealed class CurrencyListState {
 
-    data class CurrenciesUpdated (val currencies: List<CurrencyInfo>) : CurrencyListState()
+    data class CurrenciesUpdated (val currencies: List<CurrencyUiModel>) : CurrencyListState()
 
     data object CurrenciesNotFound : CurrencyListState()
 
