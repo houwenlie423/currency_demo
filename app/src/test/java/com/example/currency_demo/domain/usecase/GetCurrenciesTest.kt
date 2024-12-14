@@ -69,7 +69,9 @@ class GetCurrenciesTest {
 
         // when
         val query = Random.nextInt().toString()
-        getCurrencies(query).test().dispose()
+        getCurrencies(query).test()
+            .assertNoErrors()
+            .dispose()
 
         // then
         schedulerProvider.verifyIO()

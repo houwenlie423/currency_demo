@@ -82,6 +82,8 @@ class AddCurrencyTest {
         val currencyInfo = CurrencyInfo(id = "id", name = "name", symbol = "symbol", code = "code")
         addCurrency(currencyInfo.id, currencyInfo.name, currencyInfo.symbol, currencyInfo.code)
             .test()
+            .assertComplete()
+            .assertNoErrors()
             .dispose()
 
         // then

@@ -64,7 +64,10 @@ class AddCurrenciesTest {
 
         // when
         val currencies = listOf(CurrencyInfo("", "", "", ""))
-        addCurrencies(currencies).test().dispose()
+        addCurrencies(currencies).test()
+            .assertComplete()
+            .assertNoErrors()
+            .dispose()
 
         // then
         schedulerProvider.verifyIO()
