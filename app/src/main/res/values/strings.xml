@@ -24,4 +24,7 @@
     <!--  Success Message  -->
     <string name="clear_data_success">Successfully cleared all saved data!</string>
     <string name="add_custom_currency_success">Successfully added new currency!</string>
+
+    <!--  Menu  -->
+    <string name="search_currency_title">Search</string>
 </resources>
