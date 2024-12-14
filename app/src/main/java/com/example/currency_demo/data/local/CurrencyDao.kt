@@ -28,16 +28,16 @@ interface CurrencyDao {
 
     @Query(
         """
-         SELECT * FROM currency_info 
-         WHERE name LIKE :searchQuery || '%' 
-         OR name LIKE '%' || ' ' || :searchQuery || '%' 
-         OR symbol LIKE :searchQuery || '%'
-         ORDER BY 
-             CASE 
-                 WHEN code IS NULL OR code = '' THEN 0
-                 ELSE 1
-             END, 
-             name ASC
+            SELECT * FROM currency_info 
+            WHERE name LIKE :searchQuery || '%' 
+            OR name LIKE '%' || ' ' || :searchQuery || '%' 
+            OR symbol LIKE :searchQuery || '%'
+            ORDER BY 
+                CASE 
+                    WHEN code IS NULL OR TRIM(code) = '' THEN 0
+                    ELSE 1
+                END ASC, 
+                name ASC
         """
     )
     fun getCurrencies(searchQuery: String): Flowable<List<CurrencyInfo>>
