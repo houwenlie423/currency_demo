@@ -69,11 +69,25 @@ class DemoActivity : AppCompatActivity() {
 
     private fun render(state: DemoViewState) {
         when (state) {
-            is DemoViewState.AddCryptoCurrenciesSuccess -> showToast("Success adding crypto currencies")
+            is DemoViewState.AddCustomCurrencySuccess -> {
+                showToast(getString(R.string.add_custom_currency_success))
+                resetTextFields()
+            }
 
-            is DemoViewState.AddCryptoCurrenciesError -> showToast(state.errorMessage)
+            is DemoViewState.ClearDataSuccess -> showToast(getString(R.string.clear_data_success))
 
-            else -> Unit
+            is DemoViewState.ValidationError -> showToast(getString(R.string.validation_error_message))
+
+            is DemoViewState.GeneralError -> showToast(getString(R.string.general_error_message, state.errorMessage))
+        }
+    }
+
+    private fun resetTextFields() {
+        binding.apply {
+            etCurrencyId.setText("")
+            etCurrencyName.setText("")
+            etCurrencySymbol.setText("")
+            etCurrencyCode.setText("")
         }
     }
 }
