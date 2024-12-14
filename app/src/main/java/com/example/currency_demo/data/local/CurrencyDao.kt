@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.currency_demo.data.model.CurrencyInfo
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
 
 
 /**
@@ -34,5 +34,5 @@ interface CurrencyDao {
          OR symbol LIKE :searchQuery || '%'
      """
     )
-    fun getCurrencies(searchQuery: String): Observable<List<CurrencyInfo>>
+    fun getCurrencies(searchQuery: String): Flowable<List<CurrencyInfo>>
 }

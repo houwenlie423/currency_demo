@@ -18,6 +18,8 @@ class GetCurrencies @Inject constructor(
     operator fun invoke(searchQuery: String): Observable<List<CurrencyInfo>> {
         return repository.getCurrencies(searchQuery)
             .distinctUntilChanged()
+            .onBackpressureLatest()
+            .toObservable()
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
     }

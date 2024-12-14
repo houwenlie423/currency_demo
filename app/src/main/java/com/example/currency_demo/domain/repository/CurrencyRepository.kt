@@ -2,7 +2,7 @@ package com.example.currency_demo.domain.repository
 
 import com.example.currency_demo.data.model.CurrencyInfo
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
 
 
 /**
@@ -18,5 +18,5 @@ interface CurrencyRepository {
 
     fun addCurrencies(currencies: List<CurrencyInfo>): Completable
 
-    fun getCurrencies(searchQuery: String): Observable<List<CurrencyInfo>>
+    fun getCurrencies(searchQuery: String): Flowable<List<CurrencyInfo>>
 }
