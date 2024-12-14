@@ -112,7 +112,7 @@ class CurrencyListFragment : Fragment() {
             menuInflater.inflate(R.menu.menu_fragment_currency_list, menu)
 
             val searchItem = menu.findItem(R.id.action_search)
-            val searchView = searchItem as? SearchView ?: return
+            val searchView = searchItem.actionView as? SearchView ?: return
 
             searchView.onQueryTextChanged { searchQuery ->
                 viewModel.dispatchEvent(CurrencyListEvent.SearchQueryUpdated(searchQuery))
