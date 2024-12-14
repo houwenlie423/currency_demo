@@ -29,7 +29,7 @@ class CurrencyListViewModel @Inject constructor(
 
     override val state: LiveData<CurrencyListState> get() = _state
 
-    private val searchQuery = BehaviorSubject.createDefault("")
+    private val searchQuery = BehaviorSubject.create<String>()
 
     init {
         observeCurrencies()
