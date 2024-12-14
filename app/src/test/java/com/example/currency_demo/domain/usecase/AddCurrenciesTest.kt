@@ -18,7 +18,7 @@ import org.junit.Test
  */
 class AddCurrenciesTest {
 
-    private val repository = mockk<CurrencyRepository>()
+    private val repository = mockk<CurrencyRepository>(relaxed = true)
 
     private val schedulerProvider = FakeSchedulerProvider().immediate()
 

@@ -19,7 +19,7 @@ import kotlin.random.Random
  */
 class AddCurrencyTest {
 
-    private val repository = mockk<CurrencyRepository>()
+    private val repository = mockk<CurrencyRepository>(relaxed = true)
 
     private val schedulerProvider = FakeSchedulerProvider().immediate()
 

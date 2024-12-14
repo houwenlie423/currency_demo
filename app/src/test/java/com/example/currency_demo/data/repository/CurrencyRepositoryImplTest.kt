@@ -17,7 +17,7 @@ import kotlin.random.Random
  */
 class CurrencyRepositoryImplTest {
 
-    private val currencyDao = mockk<CurrencyDao>()
+    private val currencyDao = mockk<CurrencyDao>(relaxed = true)
 
     private lateinit var repository: CurrencyRepositoryImpl
 

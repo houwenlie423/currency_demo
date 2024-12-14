@@ -33,19 +33,19 @@ class DemoViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val addCurrency = mockk<AddCurrency>()
+    private val addCurrency = mockk<AddCurrency>(relaxed = true)
 
-    private val addCurrencyLazy = mockk<Lazy<AddCurrency>>()
+    private val addCurrencyLazy = mockk<Lazy<AddCurrency>>(relaxed = true)
 
-    private val addCurrencies = mockk<AddCurrencies>()
+    private val addCurrencies = mockk<AddCurrencies>(relaxed = true)
 
-    private val addCurrenciesLazy = mockk<Lazy<AddCurrencies>>()
+    private val addCurrenciesLazy = mockk<Lazy<AddCurrencies>>(relaxed = true)
 
-    private val clearData = mockk<ClearData>()
+    private val clearData = mockk<ClearData>(relaxed = true)
 
-    private val clearDataLazy = mockk<Lazy<ClearData>>()
+    private val clearDataLazy = mockk<Lazy<ClearData>>(relaxed = true)
 
-    private val stateObserver = mockk<Observer<DemoViewState>>()
+    private val stateObserver = mockk<Observer<DemoViewState>>(relaxed = true)
 
     private lateinit var viewModel: DemoViewModel
 

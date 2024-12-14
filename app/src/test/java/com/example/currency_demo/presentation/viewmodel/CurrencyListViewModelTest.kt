@@ -34,7 +34,7 @@ class CurrencyListViewModelTest {
 
     private val schedulerProvider = FakeSchedulerProvider().immediate()
 
-    private val stateObserver = mockk<Observer<CurrencyListState>>()
+    private val stateObserver = mockk<Observer<CurrencyListState>>(relaxed = true)
 
     private lateinit var viewModel: CurrencyListViewModel
 

@@ -16,7 +16,7 @@ import org.junit.Test
  */
 class ClearDataTest {
 
-    private val repository = mockk<CurrencyRepository>()
+    private val repository = mockk<CurrencyRepository>(relaxed = true)
 
     private val schedulerProvider = FakeSchedulerProvider().immediate()
 
