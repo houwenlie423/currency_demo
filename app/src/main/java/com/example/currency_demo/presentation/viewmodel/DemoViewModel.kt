@@ -3,9 +3,10 @@ package com.example.currency_demo.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.currency_demo.common.RxLifecycleVM
-import com.example.currency_demo.common.scheduler.SchedulerProvider
+import com.example.currency_demo.common.SampleData
+import com.example.currency_demo.common.ValidationException
+import com.example.currency_demo.common.collectBy
 import com.example.currency_demo.data.model.CurrencyInfo
-import com.example.currency_demo.domain.repository.CurrencyRepository
 import com.example.currency_demo.domain.usecase.AddCurrencies
 import com.example.currency_demo.domain.usecase.AddCurrency
 import com.example.currency_demo.domain.usecase.ClearData
@@ -13,7 +14,6 @@ import com.example.currency_demo.presentation.event.DemoEvent
 import com.example.currency_demo.presentation.state.DemoViewState
 import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
@@ -43,11 +43,11 @@ class DemoViewModel @Inject constructor(
 
     override fun dispatchEvent(event: DemoEvent) {
         when (event) {
-            is DemoEvent.AddCryptoButtonClicked -> TODO()
+            is DemoEvent.AddCryptoButtonClicked -> addCurrencies(currencies = SampleData.SAMPLE_CRYPTO_CURRENCIES)
+
+            is DemoEvent.AddFiatButtonClicked -> addCurrencies(currencies = SampleData.SAMPLE_FIAT_CURRENCIES)
 
             is DemoEvent.AddCustomCurrencyButtonClicked -> TODO()
-
-            is DemoEvent.AddFiatButtonClicked -> TODO()
 
             is DemoEvent.ClearButtonClicked -> TODO()
 
@@ -59,6 +59,18 @@ class DemoViewModel @Inject constructor(
 
             is DemoEvent.CurrencyCodeChanged -> updateCurrencyCode(event.code)
         }
+    }
+
+    private fun addCurrencies(currencies: List<CurrencyInfo>) {
+        addCurrencies.get().invoke(currencies)
+            .doOnError { error ->
+                if (error is ValidationException) {
+                    _state.value = DemoViewState.ValidationError
+                } else {
+                    _state.value = DemoViewState.GeneralError(errorMessage = error.message.orEmpty())
+                }
+            }
+            .collectBy(disposeBag)
     }
 
     private fun updateCurrencyId(id: String) {
