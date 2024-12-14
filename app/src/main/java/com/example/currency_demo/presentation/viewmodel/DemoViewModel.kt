@@ -47,7 +47,7 @@ class DemoViewModel @Inject constructor(
 
             is DemoEvent.AddFiatButtonClicked -> addCurrencies(currencies = SampleData.SAMPLE_FIAT_CURRENCIES)
 
-            is DemoEvent.AddCustomCurrencyButtonClicked -> TODO()
+            is DemoEvent.AddCustomCurrencyButtonClicked -> addCustomCurrency()
 
             is DemoEvent.ClearButtonClicked -> clearData()
 
