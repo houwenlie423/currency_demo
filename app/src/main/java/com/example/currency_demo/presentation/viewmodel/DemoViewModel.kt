@@ -81,7 +81,7 @@ class DemoViewModel @Inject constructor(
         val code = currencySymbol.value.orEmpty()
 
         addCurrency.get().invoke(id, name, symbol, code)
-            .doOnComplete { _state.value = DemoViewState.AddCustomCurrencySuccess }
+            .doOnComplete { _state.value = DemoViewState.AddCustomCurrencySuccess(name) }
             .doOnError { error ->
                 if (error is ValidationException) {
                     _state.value = DemoViewState.ValidationError

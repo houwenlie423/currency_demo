@@ -8,6 +8,7 @@ import com.example.currency_demo.R
 import com.example.currency_demo.databinding.ActivityDemoBinding
 import com.example.currency_demo.presentation.event.DemoEvent
 import com.example.currency_demo.presentation.state.DemoViewState
+import com.example.currency_demo.presentation.utils.hideKeyboard
 import com.example.currency_demo.presentation.utils.onTextChanged
 import com.example.currency_demo.presentation.utils.showToast
 import com.example.currency_demo.presentation.viewmodel.DemoViewModel
@@ -70,8 +71,9 @@ class DemoActivity : AppCompatActivity() {
     private fun render(state: DemoViewState) {
         when (state) {
             is DemoViewState.AddCustomCurrencySuccess -> {
-                showToast(getString(R.string.add_custom_currency_success))
+                showToast(getString(R.string.add_custom_currency_success, state.currencyName))
                 resetTextFields()
+                binding.root.hideKeyboard()
             }
 
             is DemoViewState.ClearDataSuccess -> showToast(getString(R.string.clear_data_success))

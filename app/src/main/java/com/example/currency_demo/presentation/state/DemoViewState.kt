@@ -9,7 +9,7 @@ sealed class DemoViewState {
 
     data object ClearDataSuccess : DemoViewState()
 
-    data object AddCustomCurrencySuccess : DemoViewState()
+    data class AddCustomCurrencySuccess(val currencyName: String) : DemoViewState()
 
     data object ValidationError : DemoViewState()
 
