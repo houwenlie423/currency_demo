@@ -13,6 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currency_demo.R
 import com.example.currency_demo.data.model.CurrencyInfo
@@ -60,7 +61,7 @@ class CurrencyListFragment : Fragment() {
     private fun setupToolbarMenu() {
         val menuHost = activity as? MenuHost ?: return
         val menuProvider = createMenuProvider()
-        menuHost.addMenuProvider(menuProvider)
+        menuHost.addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setupRecyclerView() {
