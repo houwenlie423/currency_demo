@@ -8,6 +8,7 @@ import com.example.currency_demo.R
 import com.example.currency_demo.databinding.ActivityDemoBinding
 import com.example.currency_demo.presentation.event.DemoEvent
 import com.example.currency_demo.presentation.state.DemoViewState
+import com.example.currency_demo.presentation.utils.onTextChanged
 import com.example.currency_demo.presentation.utils.showToast
 import com.example.currency_demo.presentation.viewmodel.DemoViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +35,30 @@ class DemoActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.apply {
-            btnAddCrpyto.setOnClickListener {
-                viewModel.dispatchEvent(DemoEvent.AddCryptoButtonClicked(emptyList()))
+            btnAddCrpyto.setOnClickListener { viewModel.dispatchEvent(DemoEvent.AddCryptoButtonClicked) }
+            btnAddFiat.setOnClickListener { viewModel.dispatchEvent(DemoEvent.AddFiatButtonClicked) }
+            btnAddNew.setOnClickListener { viewModel.dispatchEvent(DemoEvent.AddCustomCurrencyButtonClicked) }
+            btnClear.setOnClickListener { viewModel.dispatchEvent(DemoEvent.ClearButtonClicked) }
+
+            etCurrencyId.onTextChanged { id ->
+                viewModel.dispatchEvent(
+                    DemoEvent.CurrencyIdChanged(id)
+                )
+            }
+            etCurrencyName.onTextChanged { name ->
+                viewModel.dispatchEvent(
+                    DemoEvent.CurrencyNameChanged(name)
+                )
+            }
+            etCurrencySymbol.onTextChanged { symbol ->
+                viewModel.dispatchEvent(
+                    DemoEvent.CurrencySymbolChanged(symbol)
+                )
+            }
+            etCurrencyCode.onTextChanged { code ->
+                viewModel.dispatchEvent(
+                    DemoEvent.CurrencyCodeChanged(code)
+                )
             }
         }
     }
