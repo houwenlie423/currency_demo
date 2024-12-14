@@ -70,6 +70,26 @@ class DemoViewModel @Inject constructor(
                     _state.value = DemoViewState.GeneralError(error.message.orEmpty())
                 }
             }
+            .onErrorComplete()
+            .collectBy(disposeBag)
+    }
+
+    private fun addCustomCurrency() {
+        val id = currencyId.value.orEmpty()
+        val name = currencyName.value.orEmpty()
+        val symbol = currencySymbol.value.orEmpty()
+        val code = currencySymbol.value.orEmpty()
+
+        addCurrency.get().invoke(id, name, symbol, code)
+            .doOnComplete { _state.value = DemoViewState.AddCustomCurrencySuccess }
+            .doOnError { error ->
+                if (error is ValidationException) {
+                    _state.value = DemoViewState.ValidationError
+                } else {
+                    _state.value = DemoViewState.GeneralError(error.message.orEmpty())
+                }
+            }
+            .onErrorComplete()
             .collectBy(disposeBag)
     }
 

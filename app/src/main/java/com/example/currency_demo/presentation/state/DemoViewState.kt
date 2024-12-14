@@ -9,6 +9,8 @@ sealed class DemoViewState {
 
     data object ClearDataSuccess : DemoViewState()
 
+    data object AddCustomCurrencySuccess : DemoViewState()
+
     data object ValidationError : DemoViewState()
 
     data class GeneralError(val errorMessage: String) : DemoViewState()

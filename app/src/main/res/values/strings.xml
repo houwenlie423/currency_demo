@@ -22,5 +22,6 @@
     <string name="general_error_message">Oops something went wrong\n%1$s</string>
 
     <!--  Success Message  -->
-    <string name="clear_data_success">Successfully cleared all saved data</string>
+    <string name="clear_data_success">Successfully cleared all saved data!</string>
+    <string name="add_custom_currency_success">Successfully added new currency!</string>
 </resources>
