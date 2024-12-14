@@ -72,4 +72,6 @@ dependencies {
     // JUnit & MockK
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk:1.13.13")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
 }
