@@ -78,7 +78,7 @@ class DemoViewModel @Inject constructor(
         val id = currencyId.value.orEmpty()
         val name = currencyName.value.orEmpty()
         val symbol = currencySymbol.value.orEmpty()
-        val code = currencySymbol.value.orEmpty()
+        val code = currencyCode.value.orEmpty()
 
         addCurrency.get().invoke(id, name, symbol, code)
             .doOnComplete { _state.value = DemoViewState.AddCustomCurrencySuccess(name) }
