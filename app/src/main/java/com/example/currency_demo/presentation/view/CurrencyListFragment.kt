@@ -2,20 +2,26 @@ package com.example.currency_demo.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.currency_demo.R
 import com.example.currency_demo.databinding.FragmentCurrencyListBinding
 import com.example.currency_demo.presentation.adapter.CurrencyAdapter
+import com.example.currency_demo.presentation.event.CurrencyListEvent
 import com.example.currency_demo.presentation.state.CurrencyListState
+import com.example.currency_demo.presentation.utils.onQueryTextChanged
 import com.example.currency_demo.presentation.utils.showToast
 import com.example.currency_demo.presentation.viewmodel.CurrencyListViewModel
-import com.example.currency_demo.presentation.viewmodel.DemoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -46,7 +52,14 @@ class CurrencyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupToolbarMenu()
         observeViewState()
+    }
+
+    private fun setupToolbarMenu() {
+        val menuHost = activity as? MenuHost ?: return
+        val menuProvider = createMenuProvider()
+        menuHost.addMenuProvider(menuProvider)
     }
 
     private fun setupRecyclerView() {
@@ -71,6 +84,26 @@ class CurrencyListFragment : Fragment() {
 
             else -> Unit
         }
+    }
+
+    private fun createMenuProvider() = object: MenuProvider {
+
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.menu_fragment_currency_list, menu)
+
+            val searchItem = menu.findItem(R.id.action_search)
+            val searchView = searchItem as? SearchView ?: return
+
+            searchView.onQueryTextChanged { searchQuery ->
+                viewModel.dispatchEvent(CurrencyListEvent.SearchQueryUpdated(searchQuery))
+            }
+
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+            return menuItem.itemId == R.id.action_search
+        }
+
     }
 
     override fun onDestroyView() {
