@@ -20,9 +20,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DemoViewModel @Inject constructor(
-    // TODO -> Replace with use cases
-    private val repository: Lazy<CurrencyRepository>,
-    private val schedulerProvider: SchedulerProvider
+
 ) : RxLifecycleVM<DemoViewState, DemoEvent>() {
 
     private val _state = MutableLiveData<DemoViewState>()
@@ -31,24 +29,7 @@ class DemoViewModel @Inject constructor(
 
     override fun dispatchEvent(event: DemoEvent) {
         when(event) {
-            is DemoEvent.AddCryptoButtonClicked -> {
-                repository.get().addCurrencies(
-                    listOf(
-                        CurrencyInfo(id = "1", name = "Bitcoin", symbol = "BTC"),
-                        CurrencyInfo(id = "2", name = "Ethereum", symbol = "ETH"),
-                        CurrencyInfo(id = "3", name = "Some Shit Coin", symbol = "SSC"),
-                    )
-                )
-                    .subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.ui())
-                    .doOnComplete { _state.value = DemoViewState.AddCryptoCurrenciesSuccess }
-                    .doOnError { _state.value = DemoViewState.AddCryptoCurrenciesError(it.message.orEmpty()) }
-                    .onErrorComplete()
-                    .subscribe()
-                    .addTo(disposeBag)
-            }
 
-            else -> Unit
         }
     }
 
