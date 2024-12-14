@@ -2,6 +2,7 @@
 
 Sample Currency-Themed CRUD Android Project, featuring :
 - 100% Kotlin
+- View Binding
 - Jetpack ViewModel
 - Reactive Programming with RxJava, RxKotlin and RxAndroid
 - Local Storage with Room Database
