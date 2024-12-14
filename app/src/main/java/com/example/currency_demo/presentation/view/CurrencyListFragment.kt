@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currency_demo.R
+import com.example.currency_demo.data.model.CurrencyInfo
 import com.example.currency_demo.databinding.FragmentCurrencyListBinding
 import com.example.currency_demo.presentation.adapter.CurrencyAdapter
 import com.example.currency_demo.presentation.event.CurrencyListEvent
@@ -75,15 +76,34 @@ class CurrencyListFragment : Fragment() {
 
     private fun render(state: CurrencyListState) {
         when (state) {
-            is CurrencyListState.CurrenciesUpdated -> {
-                binding.rvCurrencies.isVisible = true
-                currencyAdapter.submitList(state.currencies)
-            }
+            is CurrencyListState.CurrenciesUpdated -> showCurrencies(state.currencies)
 
-            is CurrencyListState.Error -> activity?.showToast("SOMETHING BAD")
+            is CurrencyListState.CurrenciesNotFound -> showEmptyState()
 
-            else -> Unit
+            is CurrencyListState.Error -> showErrorToast(state.errorMessage)
         }
+    }
+
+    private fun showCurrencies(currencies: List<CurrencyInfo>) {
+        binding.apply {
+            if (!rvCurrencies.isVisible) {
+                rvCurrencies.isVisible = true
+            }
+            currencyAdapter.submitList(currencies)
+            vEmptyState.root.isVisible = false
+        }
+    }
+
+    private fun showEmptyState() {
+        binding.apply {
+            rvCurrencies.isVisible = false
+            vEmptyState.root.isVisible = true
+        }
+    }
+
+    private fun showErrorToast(errorMessage: String) {
+        val message = getString(R.string.general_error_message, errorMessage)
+        activity?.showToast(message)
     }
 
     private fun createMenuProvider() = object: MenuProvider {

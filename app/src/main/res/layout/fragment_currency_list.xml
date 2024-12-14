@@ -17,4 +17,14 @@
         tools:itemCount="5"
         tools:listitem="@layout/item_currency_info"
         tools:visibility="visible" />
+
+    <include
+        android:id="@+id/vEmptyState"
+        layout="@layout/view_empty_results"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
