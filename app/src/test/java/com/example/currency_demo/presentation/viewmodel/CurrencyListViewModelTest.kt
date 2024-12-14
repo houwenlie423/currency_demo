@@ -3,6 +3,8 @@ package com.example.currency_demo.presentation.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.currency_demo.common.scheduler.FakeSchedulerProvider
+import com.example.currency_demo.data.model.CurrencyInfo
+import com.example.currency_demo.domain.mapper.toCurrencyUiModels
 import com.example.currency_demo.domain.usecase.GetCurrencies
 import com.example.currency_demo.presentation.event.CurrencyListEvent
 import com.example.currency_demo.presentation.state.CurrencyListState
@@ -28,7 +30,7 @@ class CurrencyListViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val getCurrencies = mockk<GetCurrencies>()
+    private val getCurrencies = mockk<GetCurrencies>(relaxed = true)
 
     private val schedulerProvider = FakeSchedulerProvider().immediate()
 
@@ -38,7 +40,6 @@ class CurrencyListViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
         every { stateObserver.onChanged(any()) } just Runs
     }
 
@@ -52,9 +53,7 @@ class CurrencyListViewModelTest {
     fun `viewModel should call getCurrencies with empty query on initialization`() {
         // given
         every { getCurrencies(any()) } returns Observable.just(emptyList())
-
-        // when
-        // initialization has been done from @Before
+        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
 
         // then
         verify { getCurrencies("") }
@@ -64,6 +63,7 @@ class CurrencyListViewModelTest {
     fun `should only called getCurrencies with query after QUERY_DEBOUNCE_MILLIS`() {
         // given
         schedulerProvider.test()
+        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
         val firstQuery = "firstQuery"
         val secondQuery = "secondQuery"
         every { getCurrencies(any()) } returns Observable.just(emptyList())
@@ -71,13 +71,52 @@ class CurrencyListViewModelTest {
         // when
         viewModel.apply {
             dispatchEvent(CurrencyListEvent.SearchQueryUpdated(firstQuery))
-            dispatchEvent(CurrencyListEvent.SearchQueryUpdated(firstQuery))
-            schedulerProvider.advanceTimeBy(CurrencyListViewModel.QUERY_DEBOUNCE_MILLIS, TimeUnit.MILLISECONDS)
+            dispatchEvent(CurrencyListEvent.SearchQueryUpdated(secondQuery))
+            schedulerProvider.advanceTimeBy(
+                CurrencyListViewModel.QUERY_DEBOUNCE_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
         }
 
         // then
-        verify (exactly = 0) { getCurrencies(firstQuery) }
+        verify(exactly = 0) { getCurrencies(firstQuery) }
         verify { getCurrencies(secondQuery) }
         schedulerProvider.verifyComputation()
+    }
+
+    @Test
+    fun `viewModel should emit CurrenciesNotFound if getCurrencies returns empty`() {
+        // given
+        every { getCurrencies(any()) } returns Observable.just(emptyList())
+        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
+        viewModel.state.observeForever(stateObserver)
+
+        // then
+        verify { stateObserver.onChanged(CurrencyListState.CurrenciesNotFound) }
+    }
+
+    @Test
+    fun `viewModel should emit CurrenciesUpdated if getCurrencies returns valid list`() {
+        // given
+        val currencies = listOf(CurrencyInfo("", "", "", ""))
+        every { getCurrencies(any()) } returns Observable.just(currencies)
+        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
+        viewModel.state.observeForever(stateObserver)
+
+        // then
+        val currencyUiModels = currencies.toCurrencyUiModels()
+        verify { stateObserver.onChanged(CurrencyListState.CurrenciesUpdated(currencyUiModels)) }
+    }
+
+    @Test
+    fun `viewModel should emit Error if getCurrencies throws Exception`() {
+        // given
+        val errorMessage = "errorMessage"
+        every { getCurrencies(any()) } returns Observable.error(Exception(errorMessage))
+        viewModel = CurrencyListViewModel(getCurrencies, schedulerProvider)
+        viewModel.state.observeForever(stateObserver)
+
+        // then
+        verify { stateObserver.onChanged(CurrencyListState.Error(errorMessage)) }
     }
 }
