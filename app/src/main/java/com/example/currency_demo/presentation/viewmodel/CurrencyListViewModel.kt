@@ -70,6 +70,6 @@ class CurrencyListViewModel @Inject constructor(
 
     companion object {
 
-        private const val QUERY_DEBOUNCE_MILLIS = 1500L
+        private const val QUERY_DEBOUNCE_MILLIS = 300L
     }
 }
