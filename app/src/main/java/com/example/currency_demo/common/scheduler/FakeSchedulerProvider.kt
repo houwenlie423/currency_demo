@@ -38,13 +38,9 @@ class FakeSchedulerProvider : SchedulerProvider {
         return if (isImmediate) Schedulers.trampoline() else testScheduler
     }
 
-    fun immediate() {
-        isImmediate = true
-    }
+    fun immediate() = apply { isImmediate = true }
 
-    fun test() {
-        isImmediate = false
-    }
+    fun test() = apply { isImmediate = false }
 
     fun reset() {
         isImmediate = true
@@ -63,13 +59,13 @@ class FakeSchedulerProvider : SchedulerProvider {
         }
     }
 
-    fun verifyIO(count: Int) {
+    fun verifyIO(count: Int = 1) {
         if (ioInvocationCount != count) {
             throw AssertionError("IO Scheduler was not invoked $count times")
         }
     }
 
-    fun verifyUI(count: Int) {
+    fun verifyUI(count: Int = 1) {
         if (uiInvocationCount != count) {
             throw AssertionError("UI Scheduler was not invoked $count times")
         }
