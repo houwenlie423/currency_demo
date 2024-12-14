@@ -21,6 +21,8 @@
     <include
         android:id="@+id/vEmptyState"
         layout="@layout/view_empty_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
