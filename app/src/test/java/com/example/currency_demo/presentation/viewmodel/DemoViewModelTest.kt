@@ -54,7 +54,7 @@ class DemoViewModelTest {
         every { addCurrencyLazy.get() } returns addCurrency
         every { addCurrenciesLazy.get() } returns addCurrencies
         every { clearDataLazy.get() } returns clearData
-        viewModel = DemoViewModel(addCurrencyLazy, addCurrenciesLazy, clearDataLazy )
+        viewModel = DemoViewModel(addCurrencyLazy, addCurrenciesLazy, clearDataLazy)
 
         every { stateObserver.onChanged(any()) } just Runs
     }

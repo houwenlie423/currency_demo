@@ -12,6 +12,7 @@ import com.example.currency_demo.presentation.state.CurrencyListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import org.jetbrains.annotations.VisibleForTesting
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -71,6 +72,6 @@ class CurrencyListViewModel @Inject constructor(
 
     companion object {
 
-        private const val QUERY_DEBOUNCE_MILLIS = 300L
+        @VisibleForTesting internal const val QUERY_DEBOUNCE_MILLIS = 300L
     }
 }
