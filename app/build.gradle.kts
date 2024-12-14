@@ -52,9 +52,6 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // RxJava, RxKotlin & RxAndroid
     implementation("io.reactivex.rxjava2:rxjava:2.2.19")
@@ -71,4 +68,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-rxjava2:$roomVersion")
+
+    // JUnit & MockK
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.13")
 }
