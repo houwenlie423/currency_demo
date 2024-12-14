@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.currency_demo.data.model.CurrencyInfo
 import com.example.currency_demo.databinding.ItemCurrencyInfoBinding
+import com.example.currency_demo.presentation.model.CurrencyUiModel
 
 
 /**
  * @author Houwen Lie (houwenlie98@gmail.com)
  * @version CurrencyAdapter, v 0.1 Fri 12/13/2024 8:16 PM by Houwen Lie
  */
-class CurrencyAdapter : ListAdapter<CurrencyInfo, CurrencyViewHolder>(CurrencyDiffCallback) {
+class CurrencyAdapter : ListAdapter<CurrencyUiModel, CurrencyViewHolder>(CurrencyDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding = ItemCurrencyInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -1,8 +1,9 @@
 package com.example.currency_demo.presentation.adapter
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.currency_demo.data.model.CurrencyInfo
 import com.example.currency_demo.databinding.ItemCurrencyInfoBinding
+import com.example.currency_demo.presentation.model.CurrencyUiModel
 
 
 /**
@@ -11,10 +12,14 @@ import com.example.currency_demo.databinding.ItemCurrencyInfoBinding
  */
 class CurrencyViewHolder(private val binding: ItemCurrencyInfoBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(currencyInfo: CurrencyInfo) {
+    fun bind(currency: CurrencyUiModel) {
         binding.apply {
-            tvCurrencyName.text = currencyInfo.name
-            tvCurrencySymbol.text = currencyInfo.symbol
+            tvCurrencyName.text = currency.name
+            tvCurrencySymbol.apply {
+                isVisible = currency.showSymbol
+                text = currency.symbol
+            }
+            ivChevron.isVisible = currency.showIcon
         }
     }
 }
