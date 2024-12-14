@@ -7,19 +7,7 @@ package com.example.currency_demo.presentation.state
  */
 sealed class DemoViewState {
 
-    data object ClearDataSuccess : DemoViewState()
+    data object ValidationError : DemoViewState()
 
-    data class ClearDataError(val errorMessage: String) :  DemoViewState()
-
-    data object AddFiatCurrenciesSuccess : DemoViewState()
-
-    data class AddFiatCurrenciesError(val errorMessage: String) : DemoViewState()
-
-    data object AddCryptoCurrenciesSuccess : DemoViewState()
-
-    data class AddCryptoCurrenciesError(val errorMessage: String) : DemoViewState()
-
-    data object AddCustomCurrencySuccess : DemoViewState()
-
-    data class AddCustomCurrencyError(val errorMessage: String) : DemoViewState()
+    data class GeneralError(val errorMessage: String) : DemoViewState()
 }
