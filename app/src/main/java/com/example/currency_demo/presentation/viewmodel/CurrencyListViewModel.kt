@@ -3,13 +3,15 @@ package com.example.currency_demo.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.currency_demo.common.RxLifecycleVM
+import com.example.currency_demo.common.collectBy
 import com.example.currency_demo.common.scheduler.SchedulerProvider
-import com.example.currency_demo.domain.repository.CurrencyRepository
+import com.example.currency_demo.domain.usecase.GetCurrencies
 import com.example.currency_demo.presentation.event.CurrencyListEvent
 import com.example.currency_demo.presentation.state.CurrencyListState
-import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxkotlin.addTo
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -19,8 +21,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class CurrencyListViewModel @Inject constructor(
-    // TODO -> replace with use cases
-    private val repository: Lazy<CurrencyRepository>,
+    private val getCurrencies: GetCurrencies,
     private val schedulerProvider: SchedulerProvider
 ) : RxLifecycleVM<CurrencyListState, CurrencyListEvent>() {
 
@@ -28,19 +29,47 @@ class CurrencyListViewModel @Inject constructor(
 
     override val state: LiveData<CurrencyListState> get() = _state
 
+    private val searchQuery = BehaviorSubject.createDefault("")
+
     init {
-        repository.get()
-            .getCurrencies("")
-            .map<CurrencyListState> { currencies -> CurrencyListState.CurrenciesUpdated(currencies) }
-            .onErrorReturn { error -> CurrencyListState.Error(error.message.orEmpty()) }
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.ui())
-            .doOnNext { viewState -> _state.value = viewState }
-            .subscribe()
-            .addTo(disposeBag)
+        observeCurrencies()
     }
 
     override fun dispatchEvent(event: CurrencyListEvent) {
-        TODO("Not yet implemented")
+        when (event) {
+            is CurrencyListEvent.SearchQueryUpdated -> updateSearchQuery(event.searchQuery)
+        }
+    }
+
+    private fun updateSearchQuery(newSearchQuery: String) {
+        searchQuery.onNext(newSearchQuery)
+    }
+
+    private fun observeCurrencies() {
+        observeSearchQuery()
+            .switchMap { query ->
+                getCurrencies(query)
+                    .map { currencies ->
+                        if (currencies.isEmpty()) {
+                            CurrencyListState.CurrenciesNotFound
+                        } else {
+                            CurrencyListState.CurrenciesUpdated(currencies)
+                        }
+                    }
+                    .onErrorReturn { error -> CurrencyListState.Error(error.message.orEmpty()) }
+                    .doOnNext { newState -> _state.value = newState }
+            }
+            .collectBy(disposeBag)
+    }
+
+    private fun observeSearchQuery(): Observable<String> {
+        return searchQuery.hide()
+            .debounce(QUERY_DEBOUNCE_MILLIS, TimeUnit.MILLISECONDS, schedulerProvider.computation())
+            .startWith("")
+    }
+
+    companion object {
+
+        private const val QUERY_DEBOUNCE_MILLIS = 1500L
     }
 }
