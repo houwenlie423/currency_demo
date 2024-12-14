@@ -49,7 +49,7 @@ class DemoViewModel @Inject constructor(
 
             is DemoEvent.AddCustomCurrencyButtonClicked -> TODO()
 
-            is DemoEvent.ClearButtonClicked -> TODO()
+            is DemoEvent.ClearButtonClicked -> clearData()
 
             is DemoEvent.CurrencyIdChanged -> updateCurrencyId(event.id)
 
@@ -67,9 +67,17 @@ class DemoViewModel @Inject constructor(
                 if (error is ValidationException) {
                     _state.value = DemoViewState.ValidationError
                 } else {
-                    _state.value = DemoViewState.GeneralError(errorMessage = error.message.orEmpty())
+                    _state.value = DemoViewState.GeneralError(error.message.orEmpty())
                 }
             }
+            .collectBy(disposeBag)
+    }
+
+    private fun clearData() {
+        clearData.get().invoke()
+            .doOnComplete { _state.value = DemoViewState.ClearDataSuccess }
+            .doOnError { error -> _state.value = DemoViewState.GeneralError(error.message.orEmpty()) }
+            .onErrorComplete()
             .collectBy(disposeBag)
     }
 

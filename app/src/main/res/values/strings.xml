@@ -20,4 +20,7 @@
     <!--  Error  -->
     <string name="validation_error_message">Invalid input. Please check your entries and try again</string>
     <string name="general_error_message">Oops something went wrong\n%1$s</string>
+
+    <!--  Success Message  -->
+    <string name="clear_data_success">Successfully cleared all saved data</string>
 </resources>

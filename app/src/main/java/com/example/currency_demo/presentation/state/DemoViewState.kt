@@ -7,6 +7,8 @@ package com.example.currency_demo.presentation.state
  */
 sealed class DemoViewState {
 
+    data object ClearDataSuccess : DemoViewState()
+
     data object ValidationError : DemoViewState()
 
     data class GeneralError(val errorMessage: String) : DemoViewState()
